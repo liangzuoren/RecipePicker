@@ -55,8 +55,6 @@ async function poolDemo() {
     const text = 'SELECT * FROM ingredients';
     const result = await pool.query(text);
     return result
-    //const output =  pool.query(text); 
-    //return JSON.stringify(output.rows[0], null, " ");
 }
 
 module.exports = {

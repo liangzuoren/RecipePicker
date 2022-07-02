@@ -1,5 +1,8 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, Fragment} from 'react';
 import DataGrid from 'react-data-grid';
+
+//Components
+import AddIngredient from "./components/AddIngredient";
 
 function App() {
   const [ingredients, setIngredients] = useState(false);
@@ -81,6 +84,12 @@ function App() {
       <button onClick={deleteIngredient}>Delete Ingredient from Fridge</button>
       <br />
       <button onClick={getPool}>Pool Test</button>
+      <br />
+      <Fragment>
+        <div className="container">
+          <AddIngredient />
+        </div>
+      </Fragment>
     </div>
   );
 }
