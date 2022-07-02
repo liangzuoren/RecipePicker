@@ -16,7 +16,6 @@ const AddIngredient = () => {
     }
 
     const onSubmitForm = async (e) => {
-        e.preventDefault();
         try {
             const body = {"name":ingredient.name,"amount":ingredient.amount};
             const response = await fetch("http://localhost:3001/ingredients", {

@@ -12,14 +12,13 @@ app.use(function (req, res, next){
   next();
 });
 
-app.get('/', (req, res) => {
-  recipe_picker.getIngredients()
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
+app.get('/', async (req,res) => {
+  try{
+    const result = await recipe_picker.getIngredients();
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 })
 
 app.post('/ingredients', (req,res) => {
@@ -52,15 +51,6 @@ app.put('ingredients/:id', (req,res) => {
     })
 })
 
-app.get('/pool', async (req,res) => {
-  try{
-    const result = await recipe_picker.poolDemo();
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
-  
-})
 
 app.listen(port, () => {
   console.log(`Recipe Picker app listening on port ${port}`);

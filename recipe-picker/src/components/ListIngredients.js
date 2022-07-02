@@ -6,12 +6,14 @@ const ListIngredients = () => {
 
     const getIngredients = async() => {
         try{
-            const response = await fetch("http://localhost:3001/pool");
+            const response = await fetch("http://localhost:3001/", {
+                method:"GET"
+            });
             const jsonData = await response.json();
 
             setIngredients(jsonData);
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
     }
 
@@ -25,18 +27,15 @@ const ListIngredients = () => {
             <table class="table mt-5 text-center">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Ingredient</th>
                         <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* <tr>
-                            <td>Apple</td>
-                            <td>1</td>
-                        </tr>
-                    */}
                     {ingredients.map(ingredient => (
                         <tr>
+                            <td>{ingredient.id}</td>
                             <td>{ingredient.name}</td>
                             <td>{ingredient.amount}</td>
                         </tr>

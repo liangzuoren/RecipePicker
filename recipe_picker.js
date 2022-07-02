@@ -2,15 +2,10 @@ const { Pool } = require('pg')
 const pool = require('./config')
 
 //Method to get ingredients from the ingredients database
-const getIngredients = () => {
-    return new Promise(function(resolve, reject){
-        pool.query('SELECT name,amount FROM ingredients ORDER BY id ASC', (error, results) => {
-            if (error) {
-                reject(error)
-            }
-            resolve(results.rows);
-        })
-    })
+async function getIngredients() {
+    const text = 'SELECT * FROM ingredients ORDER BY id ASC';
+    const result = await pool.query(text);
+    return result
 }
 
 const createIngredient = (body) => {
@@ -51,15 +46,9 @@ const updateIngredient = (body) => {
     })
 }
 
-async function poolDemo() {
-    const text = 'SELECT * FROM ingredients';
-    const result = await pool.query(text);
-    return result
-}
 
 module.exports = {
     getIngredients,
     createIngredient,
-    deleteIngredient,
-    poolDemo
+    deleteIngredient
 }
