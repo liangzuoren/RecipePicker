@@ -3,6 +3,7 @@ import DataGrid from 'react-data-grid';
 
 //Components
 import AddIngredient from "./components/AddIngredient";
+import ListIngredients from './components/ListIngredients';
 
 function App() {
   const [ingredients, setIngredients] = useState(false);
@@ -88,6 +89,11 @@ function App() {
       <Fragment>
         <div className="container">
           <AddIngredient />
+        </div>
+      </Fragment>
+      <Fragment>
+        <div className="container">
+          <ListIngredients />
         </div>
       </Fragment>
     </div>
