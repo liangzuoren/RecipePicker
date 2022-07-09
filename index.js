@@ -4,6 +4,7 @@ const port = 3001
 
 const recipe_picker = require('./recipe_picker')
 
+//Use JSON to parse requests
 app.use(express.json())
 app.use(function (req, res, next){
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -12,6 +13,7 @@ app.use(function (req, res, next){
   next();
 });
 
+//Endpoint to send a HTTP GET request down to the ingredients database
 app.get('/', async (req,res) => {
   try{
     const result = await recipe_picker.getIngredients();
@@ -21,36 +23,75 @@ app.get('/', async (req,res) => {
   }
 })
 
-app.post('/ingredients', (req,res) => {
-  recipe_picker.createIngredient(req.body)
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
+//Endpoint to send a HTTP POST request to the ingredients database
+app.post('/ingredients/', async (req,res) => {
+  try {
+    const result = await recipe_picker.createIngredient(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
 })
 
-app.delete('/ingredients/:id', (req,res) => { 
-  recipe_picker.deleteIngredient(req.params.id)
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
+//Endpoint to send a HTTP DELETE request down to the ingredients database
+app.delete('/ingredients/', async (req,res) => {
+  try {
+    const result = await recipe_picker.deleteIngredient(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
 })
 
-app.put('ingredients/:id', (req,res) => {
-    recipe_picker.updateIngredient(req.body)
-    .then(response => {
-        res.status(200).send(response);
-    })
-    .catch(error =>{
-        res.status(500).send(error);
-    })
+//Endpoint to send a HTTP PUT request down to the ingredients database
+app.put('/ingredients/', async (req,res) => {
+  try {
+    const result = await recipe_picker.updateIngredient(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
 })
 
+//Endpoint to send a HTTP GET request to the recipes database
+app.get('/recipes/', async(req,res) => {
+  try {
+    const result = await recipe_picker.getRecipes();
+    res.json(result.rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+})
+
+//Endpoint to send a HTTP POST request to the recipes database
+app.post('/recipes/', async(req,res) => {
+  try {
+    const result = await recipe_picker.createRecipe(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+})
+
+//Endpoint to send a HTTP DELETE request to the recipes database
+app.delete('/recipes/', async (req,res) => {
+  try {
+    const result = await recipe_picker.deleteRecipe(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+})
+
+//Endpoint to send a HTTP PUT request to the recipes database
+app.put('/recipes/', async (req,res) => {
+  try {
+    const result = await recipe_picker.updateRecipe(req.body);
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Recipe Picker app listening on port ${port}`);

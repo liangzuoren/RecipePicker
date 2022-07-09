@@ -5,50 +5,77 @@ const pool = require('./config')
 async function getIngredients() {
     const text = 'SELECT * FROM ingredients ORDER BY id ASC';
     const result = await pool.query(text);
+    return result;
+}
+
+//Method to create an ingredient in the ingredients database
+async function createIngredient(body) {
+    const { name, amount } = body;
+    const text = `INSERT INTO ingredients (name, amount) VALUES ( '${name}', ${amount} ) RETURNING *`;
+    const result = await pool.query(text);
+    return result;
+}
+
+//Method to delete an ingredient from the ingredients database by ID
+async function deleteIngredient(body) {
+    const {id} = body;
+    const numId = parseInt(id);
+    const text = `DELETE FROM ingredients WHERE id=${numId}`;
+    const result = await pool.query(text);
+    return result;
+}
+
+//Method to update an ingredient from the ingredients database by ID
+async function updateIngredient(body) {
+    const {id, name, amount} = body;
+    const text = `UPDATE ingredients 
+                SET name = '${name}', amount = ${amount}
+                WHERE id = ${id}`;
+    const result = await pool.query(text);
+    return result;
+}
+
+//Method to get all recipes from the recipes database, ordered by increasing ID
+async function getRecipes() {
+    const text = 'SELECT * FROM recipes ORDER BY id ASC';
+    const result = await pool.query(text);
+    return result;
+}
+
+//Method to get create a new recipe in the recipes database
+async function createRecipe(body) {
+    const { name, steps, pic_url } = body;
+    const text = `INSERT INTO recipes ( name, steps, pic_url) VALUES ( '${name}', '${steps}', '${pic_url}') RETURNING *`;
+    const result = await pool.query(text);
+    return result;
+}
+
+//Method to delete a recipe in the recipes database by ID
+async function deleteRecipe(body) {
+    const { id } = body;
+    const numId = parseInt(id);
+    const text = `DELETE FROM recipes WHERE ID=${numId}`;
+    const result = pool.query(text);
+    return result;
+}
+
+//Method to update a recipe in the recipes database by ID
+async function updateRecipe(body){
+    const { id, name, steps, pic_url } = body;
+    const text = `UPDATE recipes
+                SET name = '${name}', steps = '${steps}', pic_url = '${pic_url}'
+                WHERE id = ${id}`;
+    const result = pool.query(text);
     return result
 }
-
-const createIngredient = (body) => {
-    return new Promise(function(resolve, reject){
-        const { name, amount } = body
-        pool.query('INSERT INTO ingredients (name, amount) VALUES ($1, $2) RETURNING *', [name,amount], (error, results) => {
-            if (error) {
-                reject(error)
-            }
-            resolve(`A new ingredient has been added to the fridge: ${results.rows[0]}`);
-        })
-    })
-}
-
-const deleteIngredient = (reqId) => {
-    return new Promise(function(resolve, reject){
-        const id = parseInt(reqId)
-        pool.query('DELETE from ingredients WHERE id = $1', [id], (error, results) => {
-            if (error) {
-                reject(error)
-            }
-            resolve(`Ingredient deleted with ID: ${id}`);
-        })
-    })
-}
-
-const updateIngredient = (body) => {
-    return new Promise(function(resolve, reject){
-        const { id, name, amount } = body
-        const intId = parseInt(id)
-        pool.query('UPDATE ingredients SET name = $1, amount = $2 WHERE id = $3', [name,amount,intId], (error,results) => {
-            if (error) {
-                reject(error)
-            }
-            resolve(`Ingredient ${id} updated to name: ${name} and amount: ${amount}`);
-        })
-
-    })
-}
-
 
 module.exports = {
     getIngredients,
     createIngredient,
-    deleteIngredient
+    deleteIngredient,
+    updateIngredient,
+    getRecipes,
+    createRecipe,
+    deleteRecipe,
+    updateRecipe
 }

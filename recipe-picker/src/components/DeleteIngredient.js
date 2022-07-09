@@ -4,10 +4,13 @@ const DeleteIngredient = () => {
 
     const [ingredient,setIngredient] = useState([]);
 
-    const onSubmitForm = async () => {
+    const onSubmitForm = async (e) => {
         try{
-            const request = await fetch(`http://localhost:3001/ingredients/${ingredient}`, {
-                method:"DELETE"
+            const body = {'id':ingredient};
+            const response = await fetch("http://localhost:3001/ingredients/", {
+                method: "DELETE",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify(body)
             });
         } catch (err) {
             console.error(err.message);
@@ -17,7 +20,7 @@ const DeleteIngredient = () => {
     return (
         <Fragment>
             <h1 className='text-center mt-5'> Delete Ingredient</h1>
-            <form className="d-flex mt-5" onSubmit={onSubmitForm}>
+            <form className="mt-5" onSubmit={onSubmitForm}>
                 <label>
                     Ingredient ID
                 </label>

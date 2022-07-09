@@ -1,30 +1,24 @@
-import React, { Fragment } from 'react';
+import React from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+//import { Nav, NavLink, NavMenu } from "./NavbarElements";
 
+//Pages
+import Layout from './pages/Layout';
+import Home from './pages/Home';
+import Cookbook from './pages/Cookbook';
 
-//Components
-import AddIngredient from "./components/AddIngredient";
-import ListIngredients from './components/ListIngredients';
-import DeleteIngredient from './components/DeleteIngredient';
 
 function App() {
-
   return (
     <div>
-      <Fragment>
-        <div className="container">
-          <ListIngredients />
-        </div>
-      </Fragment>
-      <Fragment>
-        <div className="container">
-          <AddIngredient />
-        </div>
-      </Fragment>
-      <Fragment>
-        <div className="container">
-          <DeleteIngredient />
-        </div>
-      </Fragment>
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/" element = {<Layout />}>
+            <Route index element = {<Home />} />
+            <Route path = "Cookbook" element = {<Cookbook />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
