@@ -53,8 +53,10 @@ async function createRecipe(body) {
 //Method to delete a recipe in the recipes database by ID
 async function deleteRecipe(body) {
     const { id } = body;
-    const numId = parseInt(id);
-    const text = `DELETE FROM recipes WHERE ID=${numId}`;
+    var numId = id.map(function(item) {
+        return parseInt(item,10);
+    });
+    const text = `DELETE FROM recipes WHERE ID IN (${numId.join(',')})`;
     const result = pool.query(text);
     return result;
 }

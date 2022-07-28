@@ -6,7 +6,7 @@ const DeleteRecipe = () => {
 
     const onSubmitForm = async (e) => {
         try {
-            const body = { "id" : recipe };
+            const body = { "id" : [recipe] };
             const response = await fetch("http://localhost:3001/recipes/", {
                 method : "DELETE",
                 headers : {"Content-Type" : "application/json"},

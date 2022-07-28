@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 //Components
 import ListRecipes from '../components/ListRecipes';
@@ -8,11 +8,13 @@ import UpdateRecipe from '../components/UpdateRecipe';
 
 
 const Cookbook = () => {
+    const [ id, setId ] = useState([]);
+
     return (
         <div>
             <Fragment>
                 <div className="container">
-                    <ListRecipes />
+                    <ListRecipes setId={setId}/>
                 </div>
             </Fragment>
             <Fragment>
